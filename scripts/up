@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Ir a la carpeta del repo
+REPO_DIR="$HOME/Proyectos/omarchy_init"
+cd "$REPO_DIR" || exit
+
+# 1. Comprobar si hay cambios
+if [[ -z $(git status -s) ]]; then
+    echo "✨ Nada que actualizar. Todo está al día."
+    exit 0
+fi
+
+# 2. Definir el mensaje del commit
+# Si pasas un argumento, lo usa. Si no, usa uno por defecto con la fecha.
+if [ -z "$1" ]; then
+    MESSAGE="Update dotfiles: $(date +'%d/%m/%Y %H:%M')"
+else
+    MESSAGE="$1"
+fi
+
+# 3. Proceso de Git con feedback visual
+echo "🚀 Iniciando respaldo en GitHub..."
+
+git add .
+
+if git commit -m "$MESSAGE"; then
+    echo "✅ Cambios confirmados: $MESSAGE"
+    
+    echo "📤 Subiendo a GitHub..."
+    if git push origin main; then
+        echo "🎉 ¡Todo sincronizado con éxito!"
+    else
+        echo "❌ Error al subir. Revisa tu conexión o el estado del repo."
+    fi
+else
+    echo "❌ Error al hacer el commit."
+fi
