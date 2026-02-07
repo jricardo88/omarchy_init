@@ -61,6 +61,7 @@
     "on-click-right": "alacritty"
   },
   "clock": {
+    "timezone": "America/Argentina/Salta",
     "format": "{:L%A %H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
     "tooltip": false,
